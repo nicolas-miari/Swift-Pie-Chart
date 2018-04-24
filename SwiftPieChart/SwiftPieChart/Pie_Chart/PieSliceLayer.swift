@@ -24,10 +24,24 @@ class PieSliceLayer: CALayer {
     public var strokeWidth: CGFloat = 0.0
     public var strokeColor: UIColor = .darkGray
 
+    public var growFromZeroSize: Bool = true
+
     // MARK: - CALayer
 
+    override var contentsScale: CGFloat {
+        set (newValue) {
+            if newValue == 1 {
+                print("!!!")
+            }
+            super.contentsScale = newValue
+        }
+        get {
+            return super.contentsScale
+        }
+    }
     override init() {
         super.init()
+        contentsScale = UIScreen.main.scale
         setNeedsDisplay()
     }
 
@@ -39,6 +53,7 @@ class PieSliceLayer: CALayer {
             self.fillColor = other.fillColor
             self.strokeWidth = other.strokeWidth
             self.strokeColor = other.strokeColor
+            self.contentsScale = other.contentsScale
         }
     }
 
@@ -65,6 +80,7 @@ class PieSliceLayer: CALayer {
     }
 
     override func draw(in ctx: CGContext) {
+
         let center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
         let radius = min(center.x, center.y)
 
@@ -90,7 +106,11 @@ class PieSliceLayer: CALayer {
 
     fileprivate func makeAnimation(forKey event: String) -> CAAnimation? {
         let animation = CABasicAnimation(keyPath: event)
-        animation.fromValue = self.presentation()?.value(forKey: event)
+        if growFromZeroSize {
+            animation.fromValue = 0.0
+        } else {
+            animation.fromValue = self.presentation()?.value(forKey: event)
+        }
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         animation.duration = 0.5
 

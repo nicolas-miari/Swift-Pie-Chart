@@ -44,12 +44,14 @@ open class PieChartView: UIView {
         self.containerLayer = CALayer()
         super.init(frame: frame)
         self.layer.addSublayer(containerLayer)
+        containerLayer.contentsScale = UIScreen.main.scale
     }
 
     required public init?(coder aDecoder: NSCoder) {
         self.containerLayer = CALayer()
         super.init(coder: aDecoder)
         self.layer.addSublayer(containerLayer)
+        containerLayer.contentsScale = UIScreen.main.scale
     }
 
     override open func willMove(toSuperview newSuperview: UIView?) {
@@ -68,11 +70,14 @@ open class PieChartView: UIView {
         let sublayerCount = containerLayer.sublayers?.count ?? 0
         print("Sublayer count: \(sublayerCount)")
 
+        let growFromZero = sublayerCount != normalizedValues.count
+
         if normalizedValues.count > sublayerCount {
             // Add
             let difference = normalizedValues.count - sublayerCount
             for _ in 0 ..< difference {
                 let newSlice = PieSliceLayer()
+                //newSlice.contentsScale = self.contentScaleFactor
                 newSlice.frame = self.bounds
                 containerLayer.addSublayer(newSlice)
             }
@@ -99,6 +104,7 @@ open class PieChartView: UIView {
                 let hue = (lastAngle + (0.5 * deltaAngle) ) / CGFloat.tau
                 slice.fillColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
             }
+            slice.growFromZeroSize = growFromZero
             slice.startAngle = lastAngle
             slice.endAngle = lastAngle + deltaAngle
 
