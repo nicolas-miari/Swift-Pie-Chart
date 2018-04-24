@@ -98,12 +98,12 @@ open class PieChartView: UIView {
 
             let deltaAngle = value * CGFloat.tau // 2π
 
-            if let color = delegate?.pieChartView(self, colorForSliceAt: index) {
-                slice.fillColor = color
-            } else {
+            //if let color = delegate?.pieChartView(self, colorForSliceAt: index) {
+            //    slice.fillColor = color
+            //} else {
                 let hue = (lastAngle + (0.5 * deltaAngle) ) / CGFloat.tau
-                slice.fillColor = UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0)
-            }
+                slice.fillColor = UIColor(hue: hue, saturation: 0.7, brightness: 0.85, alpha: 1.0)
+            //}
             slice.growFromZeroSize = growFromZero
             slice.startAngle = lastAngle
             slice.endAngle = lastAngle + deltaAngle

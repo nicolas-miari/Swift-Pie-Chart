@@ -32,6 +32,20 @@ class ViewController: UIViewController {
             1, 1, 6, 9, 110])
         dataSets.append([
             1, 1, 1, 1, 1, 1, 1])
+        dataSets.append([
+            1, 3, 5, 2, 1.2, 9, 10])
+        dataSets.append([
+            1, 1, 1, 10, 1, 1, 1])
+
+        dataSets.append([
+            0.5, 1, 1, 1, 1, 1, 1, 0.5])
+        dataSets.append([
+            0.6, 1, 1, 1, 1, 1, 1, 0.4])
+        dataSets.append([
+            0.7, 1, 1, 1, 1, 1, 1, 0.3])
+        dataSets.append([
+            0.8, 1, 1, 1, 1, 1, 1, 0.2])
+
 
         pieChartView.delegate = self
     }
